@@ -25,9 +25,9 @@ public class HelloRoute extends RouteBuilder {
         setupTwitter();
 
         // @formatter:off
-        from("undertow:http://localhost:8080/hello")
+        from("undertow:http://localhost:8080/hello").id("hello-java")
             .log("name = ${in.header.name}")
-            .setBody(simple("Hello, ${in.header.name} at ${date:now:yyyy/MM/dd HH:mm:ss}! #test"))
+            .setBody(simple("Hello, ${in.header.name} from Java at ${date:now:yyyy/MM/dd HH:mm:ss}! #test"))
             .to("twitter-timeline://user")
             .setBody(constant("Success!"));
         // @formatter:on
