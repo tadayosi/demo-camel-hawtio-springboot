@@ -56,7 +56,8 @@ public class DemoRoutes extends RouteBuilder {
         // @formatter:on
 
         // @formatter:off
-        fromF("twitter-timeline://user?user=%s", twitterTargetUser).id("twitter-to-twilio")
+        fromF("twitter-timeline://user?user=%s&backoffErrorThreshold=%s&backoffMultiplier=%s",
+                twitterTargetUser, 1, 60 * 15).id("twitter-to-twilio")
             .filter(simple("${body.text} starts with 'SEND: '"))
                 .log("tweet = ${body.text}")
                 .setBody(simple("${body.text.substring(6)}")) // Drop "SEND: "
